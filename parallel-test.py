@@ -1,86 +1,34 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
+from cycle_permutations import CyclePermutationSet
+from branchandbound import BranchAndBound
+from parallel_random import find_minimum_with_exhaustive_search, find_minimum, is_solution
 import time
-import sys
-import getopt
-import threading
-import os
-import multiprocessing
-
-def ncount( n ) : # тестовая CPU-загружающая функция
-    while n > 0 : n -= 1
+import numpy as np
 
 if __name__ == '__main__':
-    repnum = 100000000
-    thrnum = 2
-    mode = 'stpm' # варианты запуска
 
-    try :
-        opts, args = getopt.getopt( sys.argv[1:], "t:n:m:" )
-    except getopt.GetoptError :
-        print ( "недопустимая опция команды или её значение" )
-    
-    for opt, arg in opts :
-        if opt[ 1: ] == 't' : thrnum = int( arg )
-        if opt[ 1: ] == 'n' : repnum = int( arg )
-        if opt[ 1: ] == 'm' : mode = arg
+    s1 = list(np.random.randint(5, size=15)-np.random.randint(8))
+    s2 = list(np.random.randint(5, size=15)-np.random.randint(8))
+    s1.append(0)
+    s2.append(0)
+    s = [s1, s2]
+    co = list(np.random.randint(100, size=15))
+    el=[]
+    el.extend(range(1, 16))
+    func = tuple(co)
+    pset = CyclePermutationSet(tuple(el))
+    bb = BranchAndBound(el, co)
+    start3 = time.time()
+    bbdaughter = bb.findcyclemin(el)
+    finish3 = time.time()
+    print "Point and min fuc value found using b&b without restriction: ", (bbdaughter.Adress[1:], bbdaughter.FuncValue)
+    print "Time using b&b without restriction: ", (finish3 - start3)
 
-    print( "число процессоров (ядер) = {0:d}".format( multiprocessing.cpu_count() ) )
-    print( "исполнение в Python версия {0:s}".format( sys.version ) )
-    print( "число ветвей выполнения {0:d}".format( thrnum ) )
-    print( "число циклов в ветви {0:d}".format( repnum ) )
-
-    if 's' in mode :
-        print( "============ последовательное выполнение ============" )
-        clc = time.time()
-        for i in range( thrnum ) : ncount( repnum )
-        clc = time.time() - clc
-        print( "время {0:.2f} секунд".format( clc ) )
-
-    if 't' in mode :
-        print( "================ параллельные потоки ================" )
-        threads = []
-        for n in range( thrnum ) :
-            tid = threading.Thread( target = ncount, args=( repnum, ) )
-            threads.append( tid )
-            tid.setDaemon( 1 )
-        clc = time.time()
-        for n in range( thrnum ) : threads[ n ].start()
-        for n in range( thrnum ) : threads[ n ].join()
-        clc = time.time() - clc
-        print( "время {0:.2f} секунд".format( clc ) )
-
-    if 'p' in mode :
-        print( "=============== параллельные процессы ===============" )
-        threads = []; fork = True
-        clc = time.time()
-        for n in range( thrnum ) :
-            try : pid = os.fork();
-            except :
-                print( "ошибка создания дочернего процесса" )
-                fork = False
-                break
-            else :
-                if pid == 0 : # дочерний процесс
-                    ncount( repnum )
-                    sys.exit( 0 )
-                if pid > 0 :  # родительский процесс
-                    threads.append( pid )
-        if fork :
-            for p in threads :
-                pid, status = os.wait()
-            clc = time.time() - clc
-            print( "время {0:.2f} секунд".format( clc ) )
-
-    if 'm' in mode :
-        print( "=============== модуль multiprocessing ==============" )
-        parms = []
-        for n in range( thrnum ) :
-            parms.append( repnum )
-        multiprocessing.freeze_support()
-        pool = multiprocessing.Pool( processes = thrnum, )
-        clc = time.time()
-        pool.map( ncount, parms )
-        clc = time.time() - clc
-        print( "время {0:.2f} секунд".format( clc ) )
+    if is_solution(s, bbdaughter.Adress[1:]):
+        print "Restricrions are not working"
+    else:
+        print "Restricrions are working"
+    start2 = time.time()
+    point2, func_value2 = find_minimum(func, s, pset, quiet=True)
+    finish2 = time.time()
+    print "Point and min fuc value found using random search: ", (point2, func_value2)
+    print "Time using random search: ", (finish2 - start2)
