@@ -6,14 +6,15 @@ import numpy as np
 
 if __name__ == '__main__':
 
-    s1 = list(np.random.randint(5, size=15)-np.random.randint(8))
-    s2 = list(np.random.randint(5, size=15)-np.random.randint(8))
+    n=10
+    s1 = list(np.random.randint(5, size=n)-np.random.randint(8))
+    s2 = list(np.random.randint(5, size=n)-np.random.randint(8))
     s1.append(0)
     s2.append(0)
     s = [s1, s2]
-    co = list(np.random.randint(100, size=15))
+    co = list(np.random.randint(100, size=n))
     el=[]
-    el.extend(range(1, 16))
+    el.extend(range(1, n+1))
     func = tuple(co)
     pset = CyclePermutationSet(tuple(el))
     bb = BranchAndBound(el, co)
