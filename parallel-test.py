@@ -6,6 +6,7 @@ import numpy as np
 
 if __name__ == '__main__':
 
+    print "Get started"
     n=10
     s1 = list(np.random.randint(5, size=n)-np.random.randint(8))
     s2 = list(np.random.randint(5, size=n)-np.random.randint(8))
