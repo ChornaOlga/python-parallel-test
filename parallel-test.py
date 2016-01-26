@@ -25,11 +25,11 @@ if __name__ == '__main__':
     print "PSet", pset.generation_elements
     bb = BranchAndBound(el, co)
     bb.printbranch(el)
-    #start3 = time.time()
-    #bbdaughter = bb.findcyclemin(el)
-    #finish3 = time.time()
-    #print "Point and min fuc value found using b&b without restriction: ", (bbdaughter.Adress[1:], bbdaughter.FuncValue)
-    #print "Time using b&b without restriction: ", (finish3 - start3)
+    start3 = time.time()
+    bbdaughter = bb.findcyclemin(el)
+    finish3 = time.time()
+    print "Point and min fuc value found using b&b without restriction: ", (bbdaughter.Adress[1:], bbdaughter.FuncValue)
+    print "Time using b&b without restriction: ", (finish3 - start3)
 
     #if is_solution(s, bbdaughter.Adress[1:]):
         #print "Restricrions are not working"
