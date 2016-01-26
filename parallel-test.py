@@ -1,6 +1,6 @@
 from cycle_permutations import CyclePermutationSet
 from branchandbound import BranchAndBound
-#from parallel_random import find_minimum_with_exhaustive_search, find_minimum, is_solution
+from parallel_random import find_minimum_with_exhaustive_search, find_minimum, is_solution
 import time
 import numpy as np
 
@@ -31,10 +31,10 @@ if __name__ == '__main__':
     print "Point and min fuc value found using b&b without restriction: ", (bbdaughter.Adress[1:], bbdaughter.FuncValue)
     print "Time using b&b without restriction: ", (finish3 - start3)
 
-    #if is_solution(s, bbdaughter.Adress[1:]):
-        #print "Restricrions are not working"
-    #else:
-        #print "Restricrions are working"
+    if is_solution(s, bbdaughter.Adress[1:]):
+        print "Restricrions are not working"
+    else:
+        print "Restricrions are working"
     #start2 = time.time()
     #point2, func_value2 = find_minimum(func, s, pset, quiet=True)
     #finish2 = time.time()
