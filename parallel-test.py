@@ -22,7 +22,7 @@ if __name__ == '__main__':
     func = tuple(co)
     print "Func=", func
     pset = CyclePermutationSet(tuple(el))
-    print "PSet", pset
+    print "PSet", pset.generation_elements
     #bb = BranchAndBound(el, co)
     #start3 = time.time()
     #bbdaughter = bb.findcyclemin(el)
