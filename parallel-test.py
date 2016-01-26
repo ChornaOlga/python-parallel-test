@@ -1,5 +1,5 @@
 from cycle_permutations import CyclePermutationSet
-#from branchandbound import BranchAndBound
+from branchandbound import BranchAndBound
 #from parallel_random import find_minimum_with_exhaustive_search, find_minimum, is_solution
 import time
 import numpy as np
@@ -23,7 +23,8 @@ if __name__ == '__main__':
     print "Func=", func
     pset = CyclePermutationSet(tuple(el))
     print "PSet", pset.generation_elements
-    #bb = BranchAndBound(el, co)
+    bb = BranchAndBound(el, co)
+    bb.
     #start3 = time.time()
     #bbdaughter = bb.findcyclemin(el)
     #finish3 = time.time()
