@@ -24,7 +24,7 @@ if __name__ == '__main__':
     pset = CyclePermutationSet(tuple(el))
     print "PSet", pset.generation_elements
     bb = BranchAndBound(el, co)
-    bb.
+    bb.printbranch(el)
     #start3 = time.time()
     #bbdaughter = bb.findcyclemin(el)
     #finish3 = time.time()
