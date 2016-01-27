@@ -34,6 +34,7 @@ if __name__ == '__main__':
     else:
         print "Restricrions are working"
     start2 = time.time()
+    print "Time started"
     point2, func_value2 = find_minimum(func, s, pset, quiet=True)
     finish2 = time.time()
     print "Point and min fuc value found using random search: ", (point2, func_value2)
