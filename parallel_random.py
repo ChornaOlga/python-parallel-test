@@ -34,6 +34,7 @@ def find_minimum(goal_func,
     # Time measuring
     #timech = 0
     #timebb = 0
+    print "Start finding minimum"
     # define function to calculate goal function value
     f = lambda x: sum(i * j for i, j in zip(goal_func, x))
 
