@@ -1,6 +1,6 @@
 __author__ = "Alex Baranov"
 
-from inequalities import chernikov as c
+from chernikov import *
 from cycle_permutations import *
 from permutations import *
 import numpy as np
@@ -47,7 +47,7 @@ def find_minimum(goal_func,
 
     if not quiet:
         print "Constraints system is: \n", np.array(copied_system)
-    solver = c.InequalitiesSolver()
+    solver = chernikov.InequalitiesSolver()
     best_func_value = None
     best_point = None
     last_system_index = len(copied_system)
