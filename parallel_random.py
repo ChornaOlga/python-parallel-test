@@ -48,7 +48,7 @@ def find_minimum(goal_func,
 
     if not quiet:
         print "Constraints system is: \n", np.array(copied_system)
-    solver = chernikov.InequalitiesSolver()
+    solver = InequalitiesSolver()
     best_func_value = None
     best_point = None
     last_system_index = len(copied_system)
