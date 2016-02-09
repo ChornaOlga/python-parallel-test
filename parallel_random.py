@@ -34,7 +34,7 @@ def find_minimum(goal_func,
     # Time measuring
     #timech = 0
     #timebb = 0
-    print "Start finding minimum"
+    
     # define function to calculate goal function value
     f = lambda x: sum(i * j for i, j in zip(goal_func, x))
 
@@ -65,27 +65,27 @@ def find_minimum(goal_func,
         #Parallel!!!!!!!!
         worker_count = multiprocessing.cpu_count()
         jobs = []
-        print "---> Starting multiprocessing #", series_number
+        
         for i in xrange(worker_count):
             s = solver.get_solution(copied_system)
             p = multiprocessing.Process(target=combinatorial_set.find_nearest_set_point, args=(s, result_queue))
             jobs.append(p)
             p.start()
-            print p
+            
         for w in jobs:
             w.join()
-            print w
+            
         res = []
         while not result_queue.empty():
             res.append(result_queue.get())
         for i in xrange(len(res)):
-            print res[i], is_solution(copied_system, res[i])
+            
             if is_solution(copied_system, res[i]):
                 func_value = f(res[i])
                 experiment_valid_points[func_value] = res[i]
 
         #End of parallel
-        print "---> End of multiprocessing #", series_number
+        
         # save this point
         if len(experiment_valid_points):
             current_min = min(experiment_valid_points)
