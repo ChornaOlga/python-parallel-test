@@ -236,7 +236,7 @@ if __name__ == '__main__':
     avg_time_solution = 0
     big_counter = 0
     while big_counter < 20:
-        T = Task(40)
+        T = Task(50)
         new_p = MyPermutation(map(lambda x: x-1, find_min_of_linear_function(T)))
         #print "Permutation min of the linear function: "
         #print new_p.array_form
