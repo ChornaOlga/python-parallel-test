@@ -4,6 +4,7 @@ from sympy.combinatorics import Permutation
 from task import *
 import numpy as np
 import time
+import operator
 from parallel_random import find_minimum_with_exhaustive_search, find_minimum, is_solution
 
 class MyPermutation(Permutation):
@@ -228,40 +229,59 @@ def index2d(list2d, value):
                 for j, x in enumerate(lst) if x == value)
 
 if __name__ == '__main__':
-    T = Task(80)
-    new_p = MyPermutation(map(lambda x: x-1, find_min_of_linear_function(T)))
-    print "Permutation min of the linear function: "
-    print new_p.array_form
-    print "Function value: ", new_p.func_value(T)
-    print "Number of cycles ", new_p.cycles
-    print "Cyclic structure: "
-    print new_p.cycle_structure
-    print "Cyclic form: "
-    print new_p.full_cyclic_form
-    print "Is solution: ", new_p.is_solution(T)
-    print "Number of compound transpositions: ", new_p.number_of_all_compound_transpositions()
-    if new_p.cycles > 1:
-        start = time.time()
-        best_transpositions = new_p.best_compound_transpositions(T)
-        finish1 = time.time()
-        print "Best compound transpositions finding time: ", (finish1 - start)
-        print "Theoretical goal function delta: ", new_p.evaluation(T, best_transpositions)
-        number_permutations = new_p.number_of_generating_permutations(T, best_transpositions)
-        print "Number of cyclic permutations, that can be generated: ", number_permutations
-        if number_permutations>0:
-            sequences = transpositions_sequences(best_transpositions, number_permutations)
-            print "Sequences of transpositions to generate cyclic permutations: "
-            cyclic_permutation = [[] for _ in range(number_permutations)]
-            for i in range(len(sequences)):
-                print sequences[i], "\t"
-                cyclic_permutation[i] = MyPermutation(new_p.array_form)
-            i = 0
-            for transpositions in sequences:
-                for elements in transpositions:
-                    cyclic_permutation[i] = cyclic_permutation[i].make_transposition(elements)
-                print "Cyclic permutation: ", cyclic_permutation[i].full_cyclic_form
-                print "Function value on it: ", cyclic_permutation[i].func_value(T)
-                print "Real goal function delta: ", cyclic_permutation[i].func_value(T) - new_p.func_value(T)
-                i+=1
-        finish = time.time()
-        print "Time of solution: ", (finish - start)
+    avg_number_cycles = 0
+    avg_number_compound_tr = 0
+    avg_time_to_find_best_compount_tr = 0
+    avg_number_cyclic_permutations = 0
+    avg_time_solution = 0
+    big_counter = 0
+    while big_counter < 10:
+        T = Task(80)
+        new_p = MyPermutation(map(lambda x: x-1, find_min_of_linear_function(T)))
+        #print "Permutation min of the linear function: "
+        #print new_p.array_form
+        #print "Function value: ", new_p.func_value(T)
+        #print "Number of cycles ", new_p.cycles
+        avg_number_cycles += new_p.cycles
+        #print "Cyclic structure: "
+        #print new_p.cycle_structure
+        #print "Cyclic form: "
+        #print new_p.full_cyclic_form
+        #print "Is solution: ", new_p.is_solution(T)
+        #print "Number of compound transpositions: ", new_p.number_of_all_compound_transpositions()
+        avg_number_compound_tr += new_p.number_of_all_compound_transpositions()
+        if new_p.cycles > 1:
+            start = time.time()
+            best_transpositions = new_p.best_compound_transpositions(T)
+            finish1 = time.time()
+            #print "Best compound transpositions finding time: ", (finish1 - start)
+            avg_time_to_find_best_compount_tr += (finish1 - start)
+            print "Theoretical goal function delta: ", new_p.evaluation(T, best_transpositions)
+            number_permutations = new_p.number_of_generating_permutations(T, best_transpositions)
+            #print "Number of cyclic permutations, that can be generated: ", number_permutations
+            avg_number_cyclic_permutations += number_permutations
+            if number_permutations>0:
+                sequences = transpositions_sequences(best_transpositions, number_permutations)
+                #print "Sequences of transpositions to generate cyclic permutations: "
+                cyclic_permutation = [[] for _ in range(number_permutations)]
+                for i in range(len(sequences)):
+                    #print sequences[i], "\t"
+                    cyclic_permutation[i] = MyPermutation(new_p.array_form)
+                i = 0
+                for transpositions in sequences:
+                    for elements in transpositions:
+                        cyclic_permutation[i] = cyclic_permutation[i].make_transposition(elements)
+                    #print "Cyclic permutation: ", cyclic_permutation[i].full_cyclic_form
+                    #print "Function value on it: ", cyclic_permutation[i].func_value(T)
+                    print "Real goal function delta: ", cyclic_permutation[i].func_value(T) - new_p.func_value(T)
+                    i+=1
+            finish = time.time()
+            #print "Time of solution: ", (finish - start)
+            avg_time_solution += (finish - start)
+        big_counter += 1
+    print "Average number of cycles: ", operator.truediv(avg_number_cycles, big_counter)
+    print "Average number of compound transpositions: ", operator.truediv(avg_number_compound_tr, big_counter)
+    print "Average time to find best compound transposition: ", operator.truediv(avg_time_to_find_best_compount_tr, big_counter)
+    print "Average number of cyclic permutations :", operator.truediv(avg_number_cyclic_permutations, big_counter)
+    print "Average time of solution :", operator.truediv(avg_time_solution, big_counter)
+    
