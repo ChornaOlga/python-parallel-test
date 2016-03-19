@@ -256,7 +256,7 @@ if __name__ == '__main__':
             finish1 = time.time()
             #print "Best compound transpositions finding time: ", (finish1 - start)
             avg_time_to_find_best_compount_tr += (finish1 - start)
-            print "Theoretical goal function delta: ", new_p.evaluation(T, best_transpositions)
+            #print "Theoretical goal function delta: ", new_p.evaluation(T, best_transpositions)
             number_permutations = new_p.number_of_generating_permutations(T, best_transpositions)
             #print "Number of cyclic permutations, that can be generated: ", number_permutations
             avg_number_cyclic_permutations += number_permutations
@@ -273,7 +273,7 @@ if __name__ == '__main__':
                         cyclic_permutation[i] = cyclic_permutation[i].make_transposition(elements)
                     #print "Cyclic permutation: ", cyclic_permutation[i].full_cyclic_form
                     #print "Function value on it: ", cyclic_permutation[i].func_value(T)
-                    print "Real goal function delta: ", cyclic_permutation[i].func_value(T) - new_p.func_value(T)
+                    #print "Real goal function delta: ", cyclic_permutation[i].func_value(T) - new_p.func_value(T)
                     i+=1
             finish = time.time()
             #print "Time of solution: ", (finish - start)
