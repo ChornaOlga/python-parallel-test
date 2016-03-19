@@ -1,2 +1,2 @@
 #!/bin/sh
-python parallel-test.py
+python my_permutations.py
