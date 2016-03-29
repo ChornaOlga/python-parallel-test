@@ -1,2 +1,5 @@
 #!/bin/sh
-python my_permutations.py
+#multiprocessing old code
+python parallel-test.py
+#new code without restrictions
+#python my_permutations.py
