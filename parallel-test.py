@@ -21,7 +21,7 @@ if __name__ == '__main__':
         print "Restricrions are working"
     start2 = time.time()
     print "Time started"
-    point2, func_value2 = find_minimum(T.coefficients, T.restrictions, CyclePermutationSet, quiet=True)
+    point2, func_value2 = find_minimum(tuple(T.coefficients), T.restrictions, CyclePermutationSet, quiet=True)
     finish2 = time.time()
     print "Point and min fuc value found using random search: ", (point2, func_value2)
     print "Time using random search: ", (finish2 - start2)
