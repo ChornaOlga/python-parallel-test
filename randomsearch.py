@@ -2,7 +2,7 @@ __author__ = "Alex Baranov"
 
 #Random search for any combinatorial set
 
-from inequalities import chernikov as c
+from chernikov import *
 from permutations_by_transpositions import *
 import numpy as np
 import time
